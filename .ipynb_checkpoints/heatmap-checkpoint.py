@@ -843,19 +843,16 @@ class PlainFileReader(FileReader):
 class CSVFileReader(FileReader):
     def parse(self, lines):
         import csv
-        # reader = csv.reader(lines)
-        reader = csv.DictReader(lines)
+        reader = csv.reader(lines)
         if self.config['ignore_csv_header']:
             next(reader)  # Skip header line
         count = 0
         for row in reader:
-            # (lat, lon) = (float(row[0]), float(row[1]))
-            (lat, lon) = (float(row['x']), float(row['y']))
+            (lat, lon) = (float(row[0]), float(row[1]))
             weight = 1.0
             if len(row) > 2:
                 try:
-                    if type(row['other-value']) is float:
-                        weight = float(row[2])
+                    weight = float(row[2])
                 except (ValueError):
                     pass
             count += 1
