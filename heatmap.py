@@ -39,6 +39,8 @@ try:
 except ImportError:
     import pickle
 
+from osmviz.manager import OSMManager, PILImageManager
+
 __version__ = '1.13'
 
 
@@ -699,7 +701,9 @@ def _get_osm_image(bbox, zoom, osm_base):
             image_manager=PILImageManager('RGB'),
             server=osm_base)
         (c1, c2) = bbox.corners()
-        image, bounds = osm.createOSMImage((c1.lat, c2.lat, c1.lon, c2.lon),
+        # image, bounds = osm.createOSMImage((c1.lat, c2.lat, c1.lon, c2.lon),
+                                        #    zoom)
+        image, bounds = osm.create_osm_image((c1.lat, c2.lat, c1.lon, c2.lon),
                                            zoom)
         (lat1, lat2, lon1, lon2) = bounds
         return image, Extent(coords=(LatLon(lat1, lon1),
